@@ -2,8 +2,11 @@ package com.example.productservice.service;
 
 
 import com.example.productservice.domain.ProductType;
+import com.example.productservice.domain.dto.PostProductReq;
+import com.example.productservice.domain.dto.PostProductRes;
 import com.example.productservice.domain.dto.ProductDetailDto;
 import com.example.productservice.domain.dto.GetProductListRes;
+import com.example.productservice.domain.dto.StockDto;
 import com.example.productservice.domain.entity.Product;
 import com.example.productservice.repository.ProductRedisRepository;
 import com.example.productservice.repository.ProductRepository;
@@ -92,4 +95,14 @@ public class ProductService {
     }
 
 
+    public StockDto getProductStock(String productId) {
+
+
+        return new StockDto(productId,2);
+
+    }
+
+//    public PostProductRes postNewProduct(PostProductReq postProductReq) {
+//
+//    }
 }

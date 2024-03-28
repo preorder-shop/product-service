@@ -1,7 +1,9 @@
 package com.example.productservice.common.data;
 
 
+import com.example.productservice.client.StockServiceClient;
 import com.example.productservice.domain.ProductType;
+import com.example.productservice.domain.dto.PostStockReq;
 import com.example.productservice.domain.entity.Product;
 import com.example.productservice.repository.ProductRepository;
 import lombok.AllArgsConstructor;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Component;
 public class DataLoader implements ApplicationRunner {
 
     private final ProductRepository productRepository;
+    private final StockServiceClient stockServiceClient;
 
 
     @Override
@@ -48,12 +51,38 @@ public class DataLoader implements ApplicationRunner {
                 .price(1000)
                 .build();
 
+        Product productFive = Product.builder()
+                .productId("140")
+                .name("apple")
+                .productType(ProductType.GENERAL)
+                .price(300)
+                .build();
+
 
         productRepository.save(productOne);
         productRepository.save(productTwo);
         productRepository.save(productThree);
         productRepository.save(productFour);
+        productRepository.save(productFive);
+
+
+        stockServiceClient.postStock(changeStock(productOne,10));
+        stockServiceClient.postStock(changeStock(productOne,10));
+        stockServiceClient.postStock(changeStock(productOne,100));
+        stockServiceClient.postStock(changeStock(productOne,200));
+        stockServiceClient.postStock(changeStock(productOne,300));
 
 
     }
+
+    private PostStockReq changeStock(Product product,int stock){
+        return PostStockReq.builder()
+                .productId(product.getProductId())
+                .productType(product.getProductType())
+                .stock(stock)
+                .build();
+
+    }
+
+
 }

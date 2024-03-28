@@ -62,7 +62,7 @@ public class ProductService {
 
         if (product.isEmpty()) {
             log.info("redis is empty, look db");
-            Product productInDB = productRepository.findByProductNumber(productId)
+            Product productInDB = productRepository.findByProductId(productId)
                     .orElseThrow(() -> new IllegalArgumentException("잘못된 상품 번호 입니다."));
             saveCache(productId, productInDB);
 

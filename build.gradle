@@ -45,7 +45,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
 
     // config client
-    implementation 'org.springframework.cloud:spring-cloud-starter-config'
+  //  implementation 'org.springframework.cloud:spring-cloud-starter-config'
 
     // eureka client
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'

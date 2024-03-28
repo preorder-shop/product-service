@@ -6,11 +6,14 @@ import com.example.productservice.domain.ProductType;
 import com.example.productservice.domain.dto.PostStockReq;
 import com.example.productservice.domain.entity.Product;
 import com.example.productservice.repository.ProductRepository;
+import feign.FeignException;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @AllArgsConstructor
 @Component
 public class DataLoader implements ApplicationRunner {
@@ -28,7 +31,6 @@ public class DataLoader implements ApplicationRunner {
                 .productType(ProductType.RESERVATION)
                 .price(50000)
                 .build();
-
 
         Product productTwo = Product.builder()
                 .productId("110")
@@ -58,24 +60,26 @@ public class DataLoader implements ApplicationRunner {
                 .price(300)
                 .build();
 
-
         productRepository.save(productOne);
         productRepository.save(productTwo);
         productRepository.save(productThree);
         productRepository.save(productFour);
         productRepository.save(productFive);
 
-
-        stockServiceClient.postStock(changeStock(productOne,10));
-        stockServiceClient.postStock(changeStock(productOne,10));
-        stockServiceClient.postStock(changeStock(productOne,100));
-        stockServiceClient.postStock(changeStock(productOne,200));
-        stockServiceClient.postStock(changeStock(productOne,300));
+        try {
+            stockServiceClient.postStock(changeStock(productOne, 10));
+            stockServiceClient.postStock(changeStock(productOne, 10));
+            stockServiceClient.postStock(changeStock(productOne, 100));
+            stockServiceClient.postStock(changeStock(productOne, 200));
+            stockServiceClient.postStock(changeStock(productOne, 300));
+        } catch (FeignException e) {
+            log.error(e.getMessage());
+        }
 
 
     }
 
-    private PostStockReq changeStock(Product product,int stock){
+    private PostStockReq changeStock(Product product, int stock) {
         return PostStockReq.builder()
                 .productId(product.getProductId())
                 .productType(product.getProductType())

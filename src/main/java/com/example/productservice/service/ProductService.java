@@ -1,6 +1,10 @@
 package com.example.productservice.service;
 
 
+import static com.example.productservice.common.response.BaseResponseStatus.PRODUCT_NOT_FOUND;
+
+import com.example.productservice.client.StockServiceClient;
+import com.example.productservice.common.exceptions.BaseException;
 import com.example.productservice.domain.ProductType;
 import com.example.productservice.domain.dto.PostProductReq;
 import com.example.productservice.domain.dto.PostProductRes;
@@ -26,22 +30,22 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final ProductRedisRepository productRedisRepository;
 
-    //   private final StockRepository stockRepository;
+    private final StockServiceClient stockServiceClient;
 
 
     public List<GetProductListRes> getProductList(String type) {
         List<Product> products = null;
 
-        if(type.equals("all")){
+        if (type.equals("all")) {
             products = productRepository.findAll();
         }
-        if(type.equals("reservation")){
+        if (type.equals("reservation")) {
             products = productRepository.findALlByProductType(ProductType.RESERVATION);
         }
-        if(type.equals("general")){
+        if (type.equals("general")) {
             products = productRepository.findALlByProductType(ProductType.GENERAL);
         }
-        if(products==null){
+        if (products == null) {
             throw new IllegalArgumentException("DB 에러 발생");
         }
 
@@ -70,7 +74,7 @@ public class ProductService {
 
         }
 
-        return parsing(productId,product);
+        return parsing(productId, product);
 
     }
 
@@ -97,8 +101,12 @@ public class ProductService {
 
     public StockDto getProductStock(String productId) {
 
+        productRepository.findByProductId(productId)
+                .orElseThrow(() -> new BaseException(PRODUCT_NOT_FOUND));
 
-        return new StockDto(productId,2);
+        StockDto productStock = stockServiceClient.getProductStock(productId);
+
+        return productStock;
 
     }
 

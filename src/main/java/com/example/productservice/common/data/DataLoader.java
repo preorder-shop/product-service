@@ -68,10 +68,10 @@ public class DataLoader implements ApplicationRunner {
 
         try {
             stockServiceClient.postStock(changeStock(productOne, 10));
-            stockServiceClient.postStock(changeStock(productOne, 10));
-            stockServiceClient.postStock(changeStock(productOne, 100));
-            stockServiceClient.postStock(changeStock(productOne, 200));
-            stockServiceClient.postStock(changeStock(productOne, 300));
+            stockServiceClient.postStock(changeStock(productTwo, 10));
+            stockServiceClient.postStock(changeStock(productThree, 100));
+            stockServiceClient.postStock(changeStock(productFour, 200));
+            stockServiceClient.postStock(changeStock(productFive, 300));
         } catch (FeignException e) {
             log.error(e.getMessage());
         }

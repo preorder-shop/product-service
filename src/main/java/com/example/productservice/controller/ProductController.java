@@ -52,7 +52,7 @@ public class ProductController {
     }
 
     /**
-     * 실시간 상품 수량 재고(수량) 조회 API
+     * 실시간 상품 재고(수량) 조회 API
      */
     @GetMapping("/{productId}/stock")
     public ResponseEntity<StockDto> getProductStock(@PathVariable("productId") String productId){
@@ -63,10 +63,6 @@ public class ProductController {
 
     }
 
-
-    /**
-     * 상품 등록 API
-     */
 //    @PostMapping("")
 //    public ResponseEntity<PostProductRes> postNewProduct(@RequestBody PostProductReq postProductReq){
 //

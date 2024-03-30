@@ -66,15 +66,17 @@ public class DataLoader implements ApplicationRunner {
         productRepository.save(productFour);
         productRepository.save(productFive);
 
-        try {
-            stockServiceClient.postStock(changeStock(productOne, 10));
-            stockServiceClient.postStock(changeStock(productTwo, 10));
-            stockServiceClient.postStock(changeStock(productThree, 100));
-            stockServiceClient.postStock(changeStock(productFour, 200));
-            stockServiceClient.postStock(changeStock(productFive, 300));
-        } catch (FeignException e) {
-            log.error(e.getMessage());
-        }
+//        try {
+//            stockServiceClient.postStock(changeStock(productOne, 10));
+//            stockServiceClient.postStock(changeStock(productTwo, 10));
+//            stockServiceClient.postStock(changeStock(productThree, 100));
+//            stockServiceClient.postStock(changeStock(productFour, 200));
+//            stockServiceClient.postStock(changeStock(productFive, 300));
+//        } catch (FeignException e) {
+//            log.error(e.getMessage());
+//        }
+
+        log.info("product data 초기화");
 
 
     }
